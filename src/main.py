@@ -2,7 +2,7 @@
 """Module with all data manipulations
    P.S. Can be converted to .ipynb"""
 
-# %%
+# %% [markdown]
 ## It is so good to be here
 
 # %%
@@ -13,3 +13,6 @@ import numpy
 # %%
 # lets print
 print('Hello Capstone Project Course!')
+
+
+#%%
