@@ -9,14 +9,23 @@ Data was gathered from three sources: Foursquare, Twitter, Reddit.
 - Fousquare
   - dataframe with 100 venues locations and ratings
   - every venue is one row
-  - 3 columns: latitude, longtitude, rating
+  - 3 columns: venue, latitude, longtitude, rating, twitter_sentiment, instagram_sentiment
 
 - Twitter
-  - dataframe with 1K posts for every venue
+  - dataframe with 100 posts for every venue
   - 100K rows for every post about venue
-  - columns: venue, text, sentiment 
+  - columns: venue, text, sentiment
 
 - Instagram
-  - dataframe with 1K posts for every venue
+  - dataframe with 100 posts for every venue
   - 100K rows for every post about venue
-  - columns: venue, text, sentiment 
+  - columns: venue, text, sentiment
+
+Detailed columns description
+
+- venue: (str) - name of place in FourSquare
+- text: (str) - post text from Twitter or Instagram about specific venue
+- latitude: (float) - the angular distance of a place north or south of the earth's equator
+- longtitude: (float) - the angular distance of a place east or west of the Greenwich meridian
+- rating: (float) - FourSquares average mark for venue
+- sentiment: (float) - value for an attitude towards venue
