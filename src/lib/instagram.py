@@ -84,11 +84,11 @@ def get_api_posts_df_instagram(query, results_limit=100):
             try:
                 json_page = page.json()
             except ValueError as err:
-                print(err)
+                print(page.text)
                 page = web_session.get(url_hash %
                                        {'hashtag': query}, headers=headers)
                 json_page = page.json()
-            # print(url_hash)
+            
             edges = json_path(json_page, jpath_page_edges, [])
             empty_page += 1
             for edge in edges:
@@ -96,6 +96,7 @@ def get_api_posts_df_instagram(query, results_limit=100):
                 taken = int(json_path(edge, jpath_edge_taken))
                 post['Date'] = dt.datetime.fromtimestamp(taken)
                 post['text'] = str(json_path(edge, jpath_edge_text))
+                post['query'] = query
 
                 output.append(post)
 
@@ -113,7 +114,7 @@ def get_api_posts_df_instagram(query, results_limit=100):
         snt_posts_df = pd.DataFrame.from_records(output)
     else:
         snt_posts_df = pd.DataFrame(
-            columns=['text', 'Date'])
+            columns=['Date', 'text', 'query'])
     snt_posts_df.set_index('Date', inplace=True)
 
     snt_df = snt_posts_df['text'].apply(SNT_CALC.polarity_scores)

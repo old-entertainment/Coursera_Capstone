@@ -13,6 +13,6 @@
                                 // only from the root of
                                 // your workspace 
         "**/cou_env": true
-                            },
-                            "git.ignoreLimitWarning": true
+                            }
+                            
 }
