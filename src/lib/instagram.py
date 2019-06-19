@@ -84,6 +84,7 @@ def get_api_posts_df_instagram(query, results_limit=100):
             try:
                 json_page = page.json()
             except ValueError as err:
+                print('bad query is:', query)
                 print(page.text)
                 page = web_session.get(url_hash %
                                        {'hashtag': query}, headers=headers)
