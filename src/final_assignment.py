@@ -7,7 +7,12 @@ P.S. Can be converted to .ipynb"""
 
 # %%
 # all the imports
+import random
 import pandas as pd 
+import matplotlib
+matplotlib.use('TkAgg')  # specific only for mac bug graph plot
+import matplotlib.pyplot as plt
+%matplotlib inline
 from src import get_api_posts_df_instagram, DATASETS_DIR, PROJECT_DIR, prepare_query
 # %%
 # create dataset with existing ratings
@@ -51,3 +56,33 @@ df_posts.to_csv(DATASETS_DIR + "instagram_posts.csv")
 df_venues['inst_snt'] = snt_list
 df_venues.to_csv(DATASETS_DIR + 'res.csv', index=False)
 
+#%%
+df_final = pd.read_csv(DATASETS_DIR + 'result.csv', index_col=False)
+print(df_final['inst_snt'].max())
+# plot sentiments and rating
+color_list = ['#0000FF', '#01DF01', '#FF0000',
+              '#BB12BE', '#CBC81B', '#00FFFF']
+matplotlib.rcParams.update(matplotlib.rcParamsDefault)
+# style_list = ['dark_background', 'ggplot', 'fivethirtyeight', 'grayscale', 'seaborn-pastel']
+style_list = ['dark_background', 'ggplot']
+matplotlib.pyplot.style.use(random.choice(style_list))
+figure = matplotlib.pyplot.figure(tight_layout=False)
+
+ax = matplotlib.pyplot.subplot2grid((8, 1), (0, 0), rowspan=8, colspan=1)
+
+# ax.plot(df_final['name'].index.values, df_final['inst_snt'].values,
+#         color_list[0], label='instagram sentiment')
+ax.plot(df_final['name'].values, df_final['rating'].values,
+        color_list[1], label='foursquare_rating')
+
+matplotlib.pyplot.yscale("symlog")
+matplotlib.pyplot.legend(loc="best", fancybox=True, framealpha=0.1)
+matplotlib.pyplot.title("Rating vs sentiment")
+matplotlib.pyplot.xlabel('Name')
+matplotlib.pyplot.ylabel('Value')
+
+ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
+
+plt.show()
+
+#%%
