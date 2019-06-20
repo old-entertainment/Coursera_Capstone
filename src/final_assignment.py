@@ -9,6 +9,7 @@ P.S. Can be converted to .ipynb"""
 # all the imports
 import random
 import pandas as pd 
+import folium
 import matplotlib
 matplotlib.use('TkAgg')  # specific only for mac bug graph plot
 import matplotlib.pyplot as plt
@@ -88,5 +89,25 @@ ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
 ax2.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
 
 plt.show()
+
+
+#%%
+# create map of Los Angeles using latitude and longitude values
+map_la = folium.Map(location=[37.722, -122.395], zoom_start=11)
+
+# add markers to map
+for lat, lng, label in zip(df_final['lat'], df_final['long'], df_final['name']):
+    label = folium.Popup(label, parse_html=True)
+    folium.CircleMarker(
+        [lat, lng],
+        radius=5,
+        popup=label,
+        color='blue',
+        fill=True,
+        fill_color='#3186cc',
+        fill_opacity=0.7,
+        parse_html=False).add_to(map_la)  
+    
+map_la
 
 #%%
