@@ -57,9 +57,10 @@ df_venues['inst_snt'] = snt_list
 df_venues.to_csv(DATASETS_DIR + 'res.csv', index=False)
 
 #%%
-df_final = pd.read_csv(DATASETS_DIR + 'result.csv', index_col=False)
-print(df_final['inst_snt'].max())
 # plot sentiments and rating
+df_final = pd.read_csv(DATASETS_DIR + 'result.csv', index_col=False)
+
+
 color_list = ['#0000FF', '#01DF01', '#FF0000',
               '#BB12BE', '#CBC81B', '#00FFFF']
 matplotlib.rcParams.update(matplotlib.rcParamsDefault)
@@ -67,21 +68,24 @@ matplotlib.rcParams.update(matplotlib.rcParamsDefault)
 style_list = ['dark_background', 'ggplot']
 matplotlib.pyplot.style.use(random.choice(style_list))
 figure = matplotlib.pyplot.figure(tight_layout=False)
+matplotlib.pyplot.legend(loc="best", fancybox=True, framealpha=0.1)
 
-ax = matplotlib.pyplot.subplot2grid((8, 1), (0, 0), rowspan=8, colspan=1)
+ax = matplotlib.pyplot.subplot2grid((8, 1), (0, 0), rowspan=4, colspan=1)
+ax2 = matplotlib.pyplot.subplot2grid((8, 1), (5, 0), rowspan=3, colspan=1)
 
-# ax.plot(df_final['name'].index.values, df_final['inst_snt'].values,
-#         color_list[0], label='instagram sentiment')
-ax.plot(df_final['name'].values, df_final['rating'].values,
+ax.plot(df_final['name'].index.values, df_final['inst_snt'].values,
+        color_list[0], label='instagram sentiment')
+ax2.plot(df_final['name'].values, df_final['rating'].values,
         color_list[1], label='foursquare_rating')
 
 matplotlib.pyplot.yscale("symlog")
-matplotlib.pyplot.legend(loc="best", fancybox=True, framealpha=0.1)
+
 matplotlib.pyplot.title("Rating vs sentiment")
 matplotlib.pyplot.xlabel('Name')
 matplotlib.pyplot.ylabel('Value')
 
 ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
+ax2.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
 
 plt.show()
 
