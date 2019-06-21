@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-
+.DS_Store
 
 parts/
 sdist/

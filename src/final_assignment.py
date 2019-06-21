@@ -90,13 +90,22 @@ ax2.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
 
 plt.show()
 
-
+#%%
+# read total csv and create labels
+df_final = pd.read_csv(DATASETS_DIR + 'result.csv')
+label_list = []
+for index, row in df_final.iterrows():
+    label = row['name'] + '\n'
+    label += 'Rating:' + str(row['rating']) + '\n'
+    label += 'Sentiment:' + str(round(row['inst_snt'], 2))
+    label_list.append(label)
+df_final['label'] = label_list
 #%%
 # create map of Los Angeles using latitude and longitude values
 map_la = folium.Map(location=[37.722, -122.395], zoom_start=11)
 
 # add markers to map
-for lat, lng, label in zip(df_final['lat'], df_final['long'], df_final['name']):
+for lat, lng, label in zip(df_final['lat'], df_final['long'], df_final['label']):
     label = folium.Popup(label, parse_html=True)
     folium.CircleMarker(
         [lat, lng],
@@ -106,8 +115,19 @@ for lat, lng, label in zip(df_final['lat'], df_final['long'], df_final['name']):
         fill=True,
         fill_color='#3186cc',
         fill_opacity=0.7,
-        parse_html=False).add_to(map_la)  
+        parse_html=False).add_to(map_la)
     
 map_la
+
+#%%
+# correlation calculation
+Pearson = df_final['rating'].corr(df_final['inst_snt'], method = 'pearson')
+Kendall = df_final['rating'].corr(df_final['inst_snt'], method = 'kendall')
+Spearman = df_final['rating'].corr(df_final['inst_snt'], method = 'spearman')
+print("Correlations")
+print('Pearson: ', round(Pearson, 2))
+print('Kendall: ', round(Kendall, 2))
+print('Spearman: ', round(Spearman, 2))
+
 
 #%%
