@@ -56,7 +56,7 @@ Data is taken from two sources: Foursquare API and Instagram API. Functions are 
 
 ## Results
 
-Correlation of Instagram sentiment vs Foursquare rating 
+Correlation of Instagram sentiment vs Foursquare ratings
 
 - Pearson: 0.03
 - Kendall: 0.59
